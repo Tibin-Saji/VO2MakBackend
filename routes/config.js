@@ -25,11 +25,12 @@ router.post("/login", (req, res) => {
   }
   */
   mongoose.connect(process.env.DB_MASTER_URI).then(() => {
-    GroupDatabaseModel.findOnw({ group_id: req.body.group_id }).then((doc) => {
-      if (doc.password === req.body.password) {
-        res.status(200);
+    GroupDatabaseModel.findOne({ group_id: req.body.group_id }).then((doc) => {
+      // res.send(doc);
+      if (doc.password == req.body.password) {
+        res.status(200).send("Logged in successfully");
       } else {
-        res.status(401); // change the status
+        res.status(401).send("Wrong Login"); // change the status
       }
     });
   });
