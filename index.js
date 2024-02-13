@@ -3,11 +3,12 @@ const mongoose = require("mongoose");
 const express = require("express");
 
 const app = express();
+const bodyParser = require("body-parser");
 const deviceRoute = require("./routes/device-patch");
 const userConfigRoute = require("./routes/user-config");
 const configRoute = require("./routes/config");
 
-app.use(express.json());
+app.use(bodyParser.json());
 app.use(configRoute);
 app.use(deviceRoute);
 app.use(userConfigRoute);
