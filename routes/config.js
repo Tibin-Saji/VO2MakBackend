@@ -10,11 +10,20 @@ router.post("/create-group", (req, res) => {
         "db_uri": string
     }
     */
-  mongoose.connect(process.env.DB_MASTER_URI).then(() => {
-    GroupDatabaseModel.create(req.body).then((result) => {
-      res.status(200).send(result);
+  mongoose
+    .connect(process.env.DB_MASTER_URI)
+    .then(() => {
+      GroupDatabaseModel.create(req.body)
+        .then((result) => {
+          res.status(200).send(result);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
     });
-  });
 });
 
 router.post("/login", (req, res) => {
@@ -24,23 +33,28 @@ router.post("/login", (req, res) => {
     "password": string
   }
   */
-  mongoose.connect(process.env.DB_MASTER_URI).then(() => {
-    GroupDatabaseModel.findOne({ group_id: req.body.group_id })
-      .then((doc) => {
-        // res.send(doc);
-        console.log(req.body.group_id);
-        console.log(doc);
-        if (doc.password == req.body.password) {
-          res.status(200).send("Logged in successfully");
-        } else {
-          res.status(401).send("Wrong Login"); // change the status
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-        res.status(502).send("Error");
-      });
-  });
+  mongoose
+    .connect(process.env.DB_MASTER_URI)
+    .then(() => {
+      GroupDatabaseModel.findOne({ group_id: req.body.group_id })
+        .then((doc) => {
+          // res.send(doc);
+          console.log(req.body.group_id);
+          console.log(doc);
+          if (doc.password == req.body.password) {
+            res.status(200).send("Logged in successfully");
+          } else {
+            res.status(401).send("Wrong Login"); // change the status
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          res.status(502).send("Error");
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 module.exports = router;

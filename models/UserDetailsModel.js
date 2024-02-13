@@ -13,7 +13,7 @@ const userDetailsSchema = new Schema({
   name: { type: String, required: true },
   group_id: { type: String, reequired: true },
   device_id: { type: String, default: "" },
-  short_desc: { type: String },
+  desc: { type: String },
   weight: { type: Number, required: true, default: 0 },
   age: { type: Number, required: true, default: 0 },
   data: {
