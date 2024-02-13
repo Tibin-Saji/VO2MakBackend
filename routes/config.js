@@ -28,6 +28,8 @@ router.post("/login", (req, res) => {
     GroupDatabaseModel.findOne({ group_id: req.body.group_id })
       .then((doc) => {
         // res.send(doc);
+        console.log(req.body.group_id);
+        console.log(doc);
         if (doc.password == req.body.password) {
           res.status(200).send("Logged in successfully");
         } else {
@@ -36,6 +38,7 @@ router.post("/login", (req, res) => {
       })
       .catch((err) => {
         console.log(err);
+        res.status(502).send("Error");
       });
   });
 });
