@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const UserDetailsModel = require("../models/UserDetailsModel");
 const GroupDatabaseModel = require("../models/GroupDatabaseModel");
 
+//TODO: Send data to the backend every session
+
 router.patch("/device-measure", (req, res) => {
   /*
     {
@@ -31,10 +33,10 @@ router.patch("/device-measure", (req, res) => {
 
               UserDetailsModel.find({ device_id: device_id })
                 .then(function (docs) {
-                  var rer = co2 / o2;
+                  var rer = (co2 - 0.05) / (21 - o2);
                   var dataMeasure = {
-                    o2: o2,
-                    co2: co2,
+                    o2: 21 - o2,
+                    co2: co2 - 0.05,
                     vol: vol,
                     rer: rer,
                     vo2max: 0,
@@ -44,8 +46,7 @@ router.patch("/device-measure", (req, res) => {
                     if (docs[0].weight == 0) {
                       dataMeasure.vo2max = 0;
                     } else {
-                      dataMeasure.vo2max =
-                        (vol * o2 * 0.01 * 1000) / docs[0].weight; // this is the formula in the paper
+                      dataMeasure.vo2max = (vol * (21 - o2)) / docs[0].weight; // this is the formula in the paper
                     }
 
                     // updadte existing doc

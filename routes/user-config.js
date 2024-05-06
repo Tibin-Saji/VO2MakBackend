@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const UserDetailsModel = require("../models/UserDetailsModel");
 const GroupDatabaseModel = require("../models/GroupDatabaseModel");
 
+//TODO: add a feature to start and stop a sessioin.
+
 router.patch("/update-user", (req, res) => {
   /*
   {
